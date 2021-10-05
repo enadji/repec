@@ -11,22 +11,15 @@
     header("Content-Disposition: attachment;filename=$filename");
 ?>
 </IF>
-    <journal>
-        <journal_metadata language="fr">
-            <full_title>[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut]</full_title>
-            <IF COND="[#OPTIONS.EXTRA.ALTERTITRESITE1]"><full_title>[#OPTIONS.EXTRA.ALTERTITRESITE1]</full_title></IF>
-            <IF COND="[#OPTIONS.EXTRA.ALTERTITRESITE2]"><full_title>[#OPTIONS.EXTRA.ALTERTITRESITE2]</full_title></IF>
-            <IF COND="[#OPTIONS.METADONNEESSITE.TITRESITEABREGE] AND ![#OPTIONS.METADONNEESSITE.TITRESITEABREGE] LIKE /^Titre abr.g. du site$/"><abbrev_title>[#OPTIONS.METADONNEESSITE.TITRESITEABREGE|textebrut]</abbrev_title></IF>
-            <IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE] LIKE /\d{4}-?\d{3}[xX\d]/">
-              <issn media_type="electronic">[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]</issn>
-            </IF>
-            <IF COND="[#OPTIONS.METADONNEESSITE.ISSN] LIKE /\d{4}-?\d{3}[xX\d]/">
-              <issn media_type="print">[#OPTIONS.METADONNEESSITE.ISSN]</issn>
-            </IF>
-            <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE|substr(0,-1)]<ELSE/>DOI: [#DOI.PREFIX|substr(0,-1)]</IF>
-            File-URL: [%SITEURL]
-            File-Format: text/html
-        </journal_metadata>
+<full_title>[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut]</full_title>\n
+<IF COND="[#OPTIONS.EXTRA.ALTERTITRESITE1]"><full_title>[#OPTIONS.EXTRA.ALTERTITRESITE1]</full_title></IF>
+<IF COND="[#OPTIONS.EXTRA.ALTERTITRESITE2]"><full_title>[#OPTIONS.EXTRA.ALTERTITRESITE2]</full_title></IF>
+<IF COND="[#OPTIONS.METADONNEESSITE.TITRESITEABREGE] AND ![#OPTIONS.METADONNEESSITE.TITRESITEABREGE] LIKE /^Titre abr.g. du site$/">[ABBREV_TITLE:] [#OPTIONS.METADONNEESSITE.TITRESITEABREGE|textebrut]</IF>
+<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE] LIKE /\d{4}-?\d{3}[xX\d]/">[E-ISSN:] [#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]</IF>
+<IF COND="[#OPTIONS.METADONNEESSITE.ISSN] LIKE /\d{4}-?\d{3}[xX\d]/">[ISSN:] [#OPTIONS.METADONNEESSITE.ISSN]</IF>
+<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE|substr(0,-1)]<ELSE/>DOI: [#DOI.PREFIX|substr(0,-1)]</IF>
+File-URL: [%SITEURL]
+File-Format: text/html
         <IF COND="[#TYPE] eq 'numero'">
 	    <!-- === NUMERO =============================================== -->
             <LOOP NAME="getIssueDataThroughIssueId"
@@ -68,4 +61,3 @@
             </LOOP>
 	    <!-- ========================================================== -->
         </IF>
-    </journal>
