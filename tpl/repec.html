@@ -23,12 +23,12 @@
             <IF COND="[#OPTIONS.METADONNEESSITE.ISSN] LIKE /\d{4}-?\d{3}[xX\d]/">
               <issn media_type="print">[#OPTIONS.METADONNEESSITE.ISSN]</issn>
             </IF>
-            <doi_data>
-                <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]"><doi>[#OPTIONS.EXTRA.DOI_PREFIXE|substr(0,-1)]</doi><ELSE/><doi>[#DOI.PREFIX|substr(0,-1)]</doi></IF>
-                <resource>[%SITEURL]</resource>
-            </doi_data>
+            <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE|substr(0,-1)]<ELSE/>DOI: [#DOI.PREFIX|substr(0,-1)]</IF>
+            File-URL: [%SITEURL]
+            File-Format: text/html
         </journal_metadata>
         <IF COND="[#TYPE] eq 'numero'">
+	    <!-- === NUMERO =============================================== -->
             <LOOP NAME="getIssueDataThroughIssueId"
                   SELECT="identity as issue_id,titre as issue_titre,altertitre as issue_altertitre,soustitre as issue_soustitre,langue,numero as issue_numero,status,
                   publications.datepublipapier as issue_datepublipapier, publications.datepubli as issue_datepubli, publications.datemisenligne as issue_datemisenligne"
@@ -46,7 +46,9 @@
                 <MACRO NAME="JOURNAL_ARTICLE" />
             </DO>
             </LOOP>
+	    <!-- ========================================================== -->
         <ELSE/>
+	    <!-- === ARTICLE ============================================== -->
             <LOOP NAME="getIssueDataThroughTextId"
                   SELECT="identity as issue_id,titre as issue_titre,altertitre as issue_altertitre,soustitre as issue_soustitre,langue,numero as issue_numero,entities.status"
                   TABLE="relations,entities,publications,types" 
@@ -64,5 +66,6 @@
             <MACRO NAME="JOURNAL_ARTICLE" />
             </DO>
             </LOOP>
+	    <!-- ========================================================== -->
         </IF>
     </journal>

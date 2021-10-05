@@ -17,11 +17,9 @@
             <ELSE/>
                 <issue>[#ISSUE_NUMERO]</issue>
             </IF>
-            <doi_data>
-                <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE][#ISSUE_ID]<ELSE/>DOI: [#DOI.PREFIX][#ISSUE_ID]</IF>
-                File-URL: [%SITEURL]/index.php?id=[#ISSUE_ID]<?php echo "\n";?>
-                File-Format: text/html
-            </doi_data>
+            <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE][#ISSUE_ID]<ELSE/>DOI: [#DOI.PREFIX][#ISSUE_ID]</IF>
+            File-URL: [%SITEURL]/index.php?id=[#ISSUE_ID]
+            File-Format: text/html
         </journal_issue>
 </DEFMACRO>
 <DEFMACRO NAME="JOURNAL_ARTICLE">
@@ -106,7 +104,7 @@
     <IF COND="[#SUBTITLE] AND [#GUESS_ALTER_SUBTITLE]"/>
         <FUNC NAME="SPLIT_TITLE" ALTERVAL="[#ALTERVAL]"/>
     <ELSE />
-        <title>[#ALTERVAL|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</title>
+        Title: [#ALTERVAL|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
     </IF>
     </titles>
 </DEFFUNC>
@@ -116,14 +114,14 @@
         <IF COND="[#ALTERLANGUE]"/>
             <original_language_title language="[#ALTERLANGUE]">[#SPLIT_TITLE.0|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</original_language_title>
         <ELSE />
-            <title>[#SPLIT_TITLE.0|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</title>
+            Title: [#SPLIT_TITLE.0|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
         </IF>
         <subtitle>[#SPLIT_TITLE.1|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</subtitle>
     <ELSE />
         <IF COND="[#ALTERLANGUE]"/>
             <original_language_title language="[#ALTERLANGUE]">[#ALTERVAL|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</original_language_title>
         <ELSE />
-            <title>[#ALTERVAL|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</title>
+            Title: [#ALTERVAL|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
         </IF>
    </IF>
 </DEFFUNC>
