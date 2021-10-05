@@ -22,14 +22,14 @@ class RePEc extends Plugins
 
             $url = './?do=_repec_cook&amp;type='.$type.'&amp;id='.$id;
             $buttons = '<li style="padding-left:40%"><a href='.$url.'>Afficher</a>&nbsp;|&nbsp;<a href="'.$url.'&amp;download=1">Télécharger</a></li>';
-            View::$page = preg_replace('/(<h4>Fonctions<\/h4>.*?)(<\/ul>\s*<\/div>)/s','$1<li>Produire un fichier de dépôt RePEc (rdf) :</li>'.$buttons.'$2',View::$page);
+            View::$page = preg_replace('/(<h4>Fonctions<\/h4>.*?)(<\/ul>\s*<\/div>)/s','$1<li>Dépôt RePEc (rdf) :</li>'.$buttons.'$2',View::$page);
         }
     }
 
     public function cookAction(&$context,&$errors) 
     {
         // données site
-        C::set('view.base_rep.doi', 'repec');  
+        C::set('view.base_rep.repec', 'repec');  
         C::set('doi.prefix', $this->_config['prefix']['value']);
 
         $harvested = preg_replace('/([a-z]+)/',"'$1'",$this->_config['harvestedtypes']['value']);

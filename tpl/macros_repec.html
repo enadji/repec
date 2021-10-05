@@ -27,40 +27,31 @@
     <LET VAR="authored"><LOOP NAME="checkAuthors" TABLE="auteurs" SELECT="nomfamille,prenom" WHERE="iddocument='[#TEXTE_ID]'" ORDER="degree">
     [#NBRESULTS]</LOOP></LET>
     <IF COND="[#AUTHORED]">
-        <journal_article publication_type="full_text" language="[#LANGUE]">
-                <FUNC NAME="TITLES" TITLE="[#TITRE]" ENTID="[TEXTE_ID]" SUBTITLE="[#SOUSTITRE]" ALTERTITLE="[#ALTERTITRE]" />
-            <contributors>
-                <LOOP NAME="getAuthors" TABLE="auteurs" SELECT="nomfamille,prenom" WHERE="iddocument='[#TEXTE_ID]'" ORDER="degree">
-                <DO>
-                    <person_name sequence="first" contributor_role="author">
-                        <given_name>[#PRENOM]</given_name>
-                        <surname>[#NOMFAMILLE]</surname>
-                    </person_name>
-                 </DO>
-                 </LOOP>
-            </contributors>
-                <IF COND="[#RESUME] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
-                    <LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-                    <jats:abstract xml:lang="[#VALUE]"><jats:p>[#RESUME:#VALUE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</jats:p></jats:abstract>
-                    </LOOP>
-                </IF>
-                <LET VAR="onlinedate"><IF COND="[#DATEPUBLI]">[#DATEPUBLI]<ELSE/>[#DATEMISENLIGNE]</IF></LET>
-                <FUNC NAME="PUBLIDATE" DATE="[#ONLINEDATE]" MEDIUM="online"/>
-                <IF COND="[#DATEPUBLIPAPIER] AND [#DATEPUBLIPAPIER] NE '0000-00-00' AND [#DATEPUBLIPAPIER] NE NULL">
-                   <FUNC NAME="PUBLIDATE" DATE="[#DATEPUBLIPAPIER]" MEDIUM="print" />
-                </IF>
-                <IF COND="[#PAGINATION]">
-                    <LET ARRAY="pages">[#PAGINATION|lexplode('-')]</LET>
-                    <pages>
-                        <first_page>[#PAGES.0]</first_page>
-                        <IF COND="[#PAGES.1]"><last_page>[#PAGES.1]</last_page></IF>
-                    </pages>
-                </IF>
-                <doi_data>
-                    <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]"><doi>[#OPTIONS.EXTRA.DOI_PREFIXE][#TEXTE_ID]</doi><ELSE/><doi>[#DOI.PREFIX][#TEXTE_ID]</doi></IF>
-                    <resource>[%SITEURL]/index.php?id=[#TEXTE_ID]</resource>
-                </doi_data>
-            </journal_article>
+      <FUNC NAME="TITLES" TITLE="[#TITRE]" ENTID="[TEXTE_ID]" SUBTITLE="[#SOUSTITRE]" ALTERTITLE="[#ALTERTITRE]" />
+      <contributors>
+          <LOOP NAME="getAuthors" TABLE="auteurs" SELECT="nomfamille,prenom" WHERE="iddocument='[#TEXTE_ID]'" ORDER="degree">
+          <DO>
+              Author-Name: [#PRENOM] [#NOMFAMILLE]
+           </DO>
+           </LOOP>
+      </contributors>
+      <IF COND="[#RESUME] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+        <LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+        Abstract: [#RESUME:#VALUE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
+        </LOOP>
+      </IF>
+      <LET VAR="onlinedate"><IF COND="[#DATEPUBLI]">[#DATEPUBLI]<ELSE/>[#DATEMISENLIGNE]</IF></LET>
+      <FUNC NAME="PUBLIDATE" DATE="[#ONLINEDATE]" MEDIUM="online"/>
+      <IF COND="[#DATEPUBLIPAPIER] AND [#DATEPUBLIPAPIER] NE '0000-00-00' AND [#DATEPUBLIPAPIER] NE NULL">
+         <FUNC NAME="PUBLIDATE" DATE="[#DATEPUBLIPAPIER]" MEDIUM="print" />
+      </IF>
+      <IF COND="[#PAGINATION]">
+        <LET ARRAY="pages">[#PAGINATION|lexplode('-')]</LET>
+        Pages: [#PAGES.0]<IF COND="[#PAGES.1]">-[#PAGES.1]</IF>
+      </IF>
+      DOI: <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">[#OPTIONS.EXTRA.DOI_PREFIXE][#TEXTE_ID]<ELSE/>[#DOI.PREFIX][#TEXTE_ID]</IF>
+      File-URL: [%SITEURL]/index.php?id=[#TEXTE_ID]
+      File-Format: text/html
     </IF>
 </DEFMACRO>
 <DEFFUNC NAME="PUBLIDATE" REQUIRED="medium" OPTIONAL="date">
