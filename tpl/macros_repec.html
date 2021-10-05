@@ -18,8 +18,9 @@
                 <issue>[#ISSUE_NUMERO]</issue>
             </IF>
             <doi_data>
-                <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]"><doi>[#OPTIONS.EXTRA.DOI_PREFIXE][#ISSUE_ID]</doi><ELSE/><doi>[#DOI.PREFIX][#ISSUE_ID]</doi></IF>
-                <resource>[%SITEURL]/index.php?id=[#ISSUE_ID]</resource>
+                <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE][#ISSUE_ID]<ELSE/>DOI: [#DOI.PREFIX][#ISSUE_ID]</IF>
+                File-URL: [%SITEURL]/index.php?id=[#ISSUE_ID]
+		File-Format: text/html
             </doi_data>
         </journal_issue>
 </DEFMACRO>
@@ -92,10 +93,8 @@
     </IF>
 </DEFFUNC>
 <DEFMACRO NAME="REFERENCE_TITLE">
-    <titles>
-        Title: [#TITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
-        <IF COND="[#SUBTITLE]"/><subtitle>[#SUBTITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</subtitle></IF>
-    </titles>
+    Title: [#TITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
+    <IF COND="[#SUBTITLE]"/>Subtitle: [#SUBTITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</IF>
 </DEFMACRO>
 <DEFFUNC NAME="PROCESS_TITLE_AS_TRANSLATION" REQUIRED="alterval, alterlangue">
     <IF COND="[#SUBTITLE] AND [#GUESS_ALTER_SUBTITLE]"/>
