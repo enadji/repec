@@ -74,8 +74,8 @@
           [#NBRESULTS]</LOOP></LET>
         <IF COND="[#ISTRANSLATION]"/>
             <titles>
-            <title>[#TITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</title>
-            <IF COND="[#SUBTITLE]"/><subtitle>[#SUBTITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</subtitle></IF>
+            Title: [#TITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
+            <IF COND="[#SUBTITLE]"/>Subtitle: [#SUBTITLE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]</IF>
             <LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
                 <FUNC NAME="PROCESS_TITLE_AS_TRANSLATION" ALTERVAL="[#ALTERTITLE:#VALUE]" ALTERLANGUE="[#MATCHES.1.0]"/>
             </LOOP>
