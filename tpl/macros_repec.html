@@ -19,8 +19,8 @@
             </IF>
             <doi_data>
                 <IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">DOI: [#OPTIONS.EXTRA.DOI_PREFIXE][#ISSUE_ID]<ELSE/>DOI: [#DOI.PREFIX][#ISSUE_ID]</IF>
-                File-URL: [%SITEURL]/index.php?id=[#ISSUE_ID]
-		File-Format: text/html
+                File-URL: [%SITEURL]/index.php?id=[#ISSUE_ID]<?php echo "\n";?>
+                File-Format: text/html
             </doi_data>
         </journal_issue>
 </DEFMACRO>
