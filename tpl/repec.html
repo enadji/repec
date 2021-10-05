@@ -12,16 +12,6 @@
     header("Content-Disposition: attachment;filename=$filename");
 ?>
 </IF>
-<doi_batch version="4.4.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.crossref.org/schema/4.4.2" xsi:schemaLocation="http://www.crossref.org/schema/4.4.2  http://www.crossref.org/schemas/crossref4.4.2.xsd" xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1">
-    <head>
-        <doi_batch_id>[#SITE]<?php echo date('YmdHis')?></doi_batch_id>
-        <timestamp><?php echo date('YmdHis')?></timestamp>
-        <depositor>
-            <depositor_name>[#DOI.DEPOSITOR]</depositor_name>
-            <email_address>[#DOI.EMAIL]</email_address>
-        </depositor>
-        <registrant>[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut]</registrant>
-    </head>
     <journal>
         <journal_metadata language="fr">
             <full_title>[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut]</full_title>
@@ -77,4 +67,3 @@
             </LOOP>
         </IF>
     </journal>
-</doi_batch>
