@@ -29,13 +29,11 @@
     [#NBRESULTS]</LOOP></LET>
     <IF COND="[#AUTHORED]">
       <FUNC NAME="TITLES" TITLE="[#TITRE]" ENTID="[TEXTE_ID]" SUBTITLE="[#SOUSTITRE]" ALTERTITLE="[#ALTERTITRE]" />
-      <contributors>
-          <LOOP NAME="getAuthors" TABLE="auteurs" SELECT="nomfamille,prenom" WHERE="iddocument='[#TEXTE_ID]'" ORDER="degree">
-          <DO>
-              Author-Name: [#PRENOM] [#NOMFAMILLE]
-           </DO>
-           </LOOP>
-      </contributors>
+      <LOOP NAME="getAuthors" TABLE="auteurs" SELECT="nomfamille,prenom" WHERE="iddocument='[#TEXTE_ID]'" ORDER="degree">
+      <DO>
+          Author-Name: [#PRENOM] [#NOMFAMILLE]
+      </DO>
+      </LOOP>
       <IF COND="[#RESUME] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
         <LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
         Abstract: [#RESUME:#VALUE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]
